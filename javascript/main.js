@@ -574,6 +574,20 @@ function json_onDrop(event) {
     }
 }
 
+function resizeBones(value) {
+    openpose_editor_canvas.getObjects("line").forEach((obj) => {
+        obj.set("strokeWidth", value * 10);
+        obj.fire('object:modified');
+    })
+
+    openpose_editor_canvas.getObjects("circle").forEach((obj) => {
+        obj.set("radius", value * 10 / 2);
+        obj.fire('object:modified');
+    })
+    
+    openpose_editor_canvas.renderAll();
+}
+
 onUiLoaded(function() {
     initCanvas(gradioApp().querySelector('#openpose_editor_canvas'))
 

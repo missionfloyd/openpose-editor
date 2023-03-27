@@ -64,8 +64,9 @@ def on_ui_tabs():
   with gr.Blocks(analytics_enabled=False) as openpose_editor:
     with gr.Row():
       with gr.Column():
-        width = gr.Slider(label="width", minimum=64, maximum=2048, value=512, step=64, interactive=True)
-        height = gr.Slider(label="height", minimum=64, maximum=2048, value=512, step=64, interactive=True)
+        width = gr.Slider(label="Width", minimum=64, maximum=2048, value=512, step=64, interactive=True)
+        height = gr.Slider(label="Height", minimum=64, maximum=2048, value=512, step=64, interactive=True)
+        bone_width = gr.Slider(label="Bone Width", minimum=0.1, maximum=10, value=1, step=0.1, interactive=True)
         with gr.Row():
           add = gr.Button(value="Add", variant="primary")
           # delete = gr.Button(value="Delete")
@@ -124,6 +125,7 @@ def on_ui_tabs():
     preset = gr.Text(visible=False)
     width.change(None, [width, height], None, _js="(w, h) => {resizeCanvas(w, h)}")
     height.change(None, [width, height], None, _js="(w, h) => {resizeCanvas(w, h)}")
+    bone_width.change(None, [bone_width], None, _js="resizeBones")
     png_output.click(None, [], None, _js="savePNG")
     bg_input.upload(None, [bg_input], [width, height], _js="addBackground")
     png_input.upload(estimate, png_input, jsonbox)
